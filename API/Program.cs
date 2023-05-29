@@ -26,4 +26,18 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+try
+{
+var context = services.GetRequiredService<DataContext>();
+await context.Database.MigrateAsync();   //update the database based on migrations at app startup
+                            //creates db if it doesn't exists
+await Seed.SeedData(context);
+}
+catch (Exception ex){
+    var logger = services.GetRequiredService<ILogger<Program>>();
+    logger.LogError(ex, "An error occured during migration");
+}
+
 app.Run();
