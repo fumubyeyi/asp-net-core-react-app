@@ -31,9 +31,9 @@ var services = scope.ServiceProvider;
 try
 {
 var context = services.GetRequiredService<DataContext>();
-context.Database.Migrate();   //update the database based on migrations at app startup
+await context.Database.MigrateAsync();   //update the database based on migrations at app startup
                             //creates db if it doesn't exists
-
+await Seed.SeedData(context);
 }
 catch (Exception ex){
     var logger = services.GetRequiredService<ILogger<Program>>();
