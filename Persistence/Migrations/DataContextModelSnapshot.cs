@@ -26,6 +26,9 @@ namespace Persistence.Migrations
                     b.Property<string>("Category")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("City")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
 
@@ -36,9 +39,6 @@ namespace Persistence.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Venue")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("city")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
