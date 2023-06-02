@@ -20,6 +20,9 @@ builder.Services.AddCors(opt => {
     });
 });
 builder.Services.AddMediatR(typeof(List.Handler));
+builder.Services.AddMediatR(typeof(Details.Handler));
+builder.Services.AddMediatR(typeof(Create.Handler));
+builder.Services.AddMediatR(typeof(Edit.Handler));
 
 var app = builder.Build();
 
