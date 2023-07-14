@@ -1,13 +1,16 @@
 import { Fragment, useEffect, useState } from 'react';
-import {Container} from 'semantic-ui-react';
+import {Button, Container} from 'semantic-ui-react';
 import { Activity } from '../../interfaces/activity';
 import NavBar from './NavBar';
 import ActivityDashboard from '../../features/activities/dashboard/ActivityDashboard';
 import {v4 as uuid} from 'uuid';
 import agent from '../api/agents'
 import LoadingComponent from './LoadingComponent';
+import { useStore } from '../../stores/stores/store';
+import { observer } from 'mobx-react-lite';
 
 function App() {
+  const {activityStore} = useStore();
   const [activities, setActivities] = useState<Activity[]>([]);
   const [selectedActivity, setSelectedActivity] = useState<Activity | undefined>(undefined);
   const [editMode, setEditMode] = useState(false);
@@ -15,16 +18,7 @@ function App() {
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(()=>{
-    agent.Activities.list()
-    .then(response => {
-        let activities : Activity[] = [];
-        response.forEach(activity => {
-        activity.date = activity.date.split('T')[0];
-        activities.push(activity)
-      })
-      setActivities(activities);
-      setLoading(false);
-    })
+    activityStore.loadActivities();
   }, [])
   
 
@@ -98,4 +92,4 @@ function App() {
   );
 }
 
-export default App;
+export default observer(App);
